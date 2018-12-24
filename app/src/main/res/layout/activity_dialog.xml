@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.todolist.crespi.todolist.app.Dialog">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Add"
+        android:onClick="addTask"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Cancel"
+        android:onClick="closeAdd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="358dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:singleLine="false"
+        android:text=""
+        android:hint="Task Title"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editDesc"
+        android:layout_width="350dp"
+        android:layout_height="125dp"
+        android:layout_marginBottom="92dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text=""
+        android:hint="Enter a description for this task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="-30dp"
+        android:layout_marginStart="16dp"
+        android:datePickerMode="spinner"
+        android:scaleX="0.7"
+
+        android:scaleY="0.7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.29" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.todolist.crespi.todolist.app.TaskDescription">
+
+    <EditText
+        android:id="@+id/chName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="Task Title"
+        app:layout_constraintBottom_toTopOf="@+id/editDesc"
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021"
+        tools:ignore="LabelFor,UnknownIdInLayout" />
+
+    <EditText
+        android:id="@+id/chDesc"
+        android:layout_width="295dp"
+        android:layout_height="125dp"
+        android:layout_marginBottom="88dp"
+        android:layout_marginLeft="16dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:singleLine="false"
+        android:text=""
+        android:hint="Enter a decription"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/deletetaskbtn"
+        android:onClick="deleteTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="20dp"
+        android:text="Delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/savetaskbtn"
+        android:onClick="saveTaskEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/backbtn"
+        android:onClick="backToMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <DatePicker
+        android:id="@+id/chDate"
+        android:layout_width="348dp"
+        android:layout_height="228dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="76dp"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:datePickerMode="spinner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.135" />
+
+    <Button
+        android:id="@+id/statusChanger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Status"
+        android:onClick="taskChangeStatus"
+        app:layout_constraintBottom_toTopOf="@+id/deletetaskbtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/chName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.073" />
+
+</android.support.constraint.ConstraintLayout>
