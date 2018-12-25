@@ -1,6 +1,7 @@
 package com.todolist.crespi.todolist.app;
 
 
+import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -18,26 +19,61 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class TaskAddTest {
+public class BLACKBOX_TaskAddTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void taskAddTest() {
+    public void bLACKBOX_TaskAddTest() {
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.action_add_task), withContentDescription("Add Task"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        textView.check(matches(isDisplayed()));
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.sortBtn), withContentDescription("Show Options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        textView2.check(matches(isDisplayed()));
+
+        ViewInteraction textView3 = onView(
+                allOf(withId(R.id.sortBtn), withContentDescription("Show Options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        textView3.check(matches(isDisplayed()));
+
         ViewInteraction actionMenuItemView = onView(
                 allOf(withId(R.id.action_add_task), withContentDescription("Add Task"),
                         childAtPosition(
@@ -56,6 +92,8 @@ public class TaskAddTest {
                                         0),
                                 2),
                         isDisplayed()));
+
+        appCompatEditText.check(matches(isDisplayed()));
         appCompatEditText.perform(click());
 
         ViewInteraction appCompatEditText2 = onView(
@@ -66,9 +104,9 @@ public class TaskAddTest {
                                         0),
                                 2),
                         isDisplayed()));
-        appCompatEditText2.perform(replaceText(null), closeSoftKeyboard());
 
-        pressBack();
+        appCompatEditText2.check(matches(isDisplayed()));
+        appCompatEditText2.perform(replaceText("test"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText3 = onView(
                 allOf(withId(R.id.editDesc),
@@ -80,8 +118,6 @@ public class TaskAddTest {
                         isDisplayed()));
         appCompatEditText3.perform(replaceText("test"), closeSoftKeyboard());
 
-        pressBack();
-
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.button), withText("Add"),
                         childAtPosition(
@@ -90,7 +126,37 @@ public class TaskAddTest {
                                         0),
                                 0),
                         isDisplayed()));
+        appCompatButton.check(matches(isDisplayed()));
         appCompatButton.perform(click());
+
+        ViewInteraction actionMenuItemView2 = onView(
+                allOf(withId(R.id.action_add_task), withContentDescription("Add Task"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView2.perform(click());
+
+        ViewInteraction appCompatButton2 = onView(
+                allOf(withId(R.id.button2), withText("Cancel"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatButton2.check(matches(isDisplayed()));
+        appCompatButton2.perform(click());
+
+        DataInteraction relativeLayout = onData(anything())
+                .inAdapterView(allOf(withId(R.id.list_todo),
+                        childAtPosition(
+                                withClassName(is("android.support.constraint.ConstraintLayout")),
+                                0)))
+                .atPosition(0);
+        relativeLayout.check(matches(isDisplayed()));
 
     }
 
