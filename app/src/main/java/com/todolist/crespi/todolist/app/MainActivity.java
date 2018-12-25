@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static DBTasks db;
+    public static DBTasks db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

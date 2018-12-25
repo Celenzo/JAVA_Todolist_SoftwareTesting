@@ -1,7 +1,8 @@
-package com.todolist.crespi.todolist.app;
+package com.todolist.crespi.todolist.app.BLACKBOX_UseCaseDriven;
 
 
 import android.support.test.espresso.DataInteraction;
+import android.support.test.espresso.PerformException;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -11,20 +12,24 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.todolist.crespi.todolist.R;
+import com.todolist.crespi.todolist.app.MainActivity;
+import com.todolist.crespi.todolist.db.DBTasks;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
@@ -34,46 +39,22 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class BLACKBOX_TaskAddTest {
+public class BLACKBOX_CancelTaskAddTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+    @Before
+    public void dropDatabase() {
+        MainActivity.db.dropDb();
+    }
+
     @Test
-    public void bLACKBOX_TaskAddTest() {
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.action_add_task), withContentDescription("Add Task"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.action_bar),
-                                        1),
-                                0),
-                        isDisplayed()));
-        textView.check(matches(isDisplayed()));
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.sortBtn), withContentDescription("Show Options"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.action_bar),
-                                        1),
-                                1),
-                        isDisplayed()));
-        textView2.check(matches(isDisplayed()));
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.sortBtn), withContentDescription("Show Options"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.action_bar),
-                                        1),
-                                1),
-                        isDisplayed()));
-        textView3.check(matches(isDisplayed()));
-
+    public void bLACKBOX_CancelTaskAddTest() {
         ViewInteraction actionMenuItemView = onView(
                 allOf(withId(R.id.action_add_task), withContentDescription("Add Task"),
                         childAtPosition(
@@ -82,6 +63,8 @@ public class BLACKBOX_TaskAddTest {
                                         1),
                                 0),
                         isDisplayed()));
+
+        actionMenuItemView.check(matches(isDisplayed()));
         actionMenuItemView.perform(click());
 
         ViewInteraction appCompatEditText = onView(
@@ -129,7 +112,7 @@ public class BLACKBOX_TaskAddTest {
         appCompatButton.check(matches(isDisplayed()));
         appCompatButton.perform(click());
 
-        ViewInteraction actionMenuItemView2 = onView(
+        ViewInteraction actionMenuItemView4 = onView(
                 allOf(withId(R.id.action_add_task), withContentDescription("Add Task"),
                         childAtPosition(
                                 childAtPosition(
@@ -137,7 +120,44 @@ public class BLACKBOX_TaskAddTest {
                                         1),
                                 0),
                         isDisplayed()));
-        actionMenuItemView2.perform(click());
+
+        actionMenuItemView4.check(matches(isDisplayed()));
+        actionMenuItemView4.perform(click());
+
+        ViewInteraction appCompatEditText4 = onView(
+                allOf(withId(R.id.editName),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                2),
+                        isDisplayed()));
+
+        appCompatEditText4.check(matches(isDisplayed()));
+        appCompatEditText4.perform(click());
+
+        ViewInteraction appCompatEditText5 = onView(
+                allOf(withId(R.id.editName),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                2),
+                        isDisplayed()));
+
+        appCompatEditText5.check(matches(isDisplayed()));
+        appCompatEditText5.perform(replaceText("test"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText6 = onView(
+                allOf(withId(R.id.editDesc),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatEditText6.perform(replaceText("test"), closeSoftKeyboard());
+
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.button2), withText("Cancel"),
@@ -147,16 +167,21 @@ public class BLACKBOX_TaskAddTest {
                                         0),
                                 1),
                         isDisplayed()));
+
         appCompatButton2.check(matches(isDisplayed()));
         appCompatButton2.perform(click());
 
-        DataInteraction relativeLayout = onData(anything())
-                .inAdapterView(allOf(withId(R.id.list_todo),
-                        childAtPosition(
-                                withClassName(is("android.support.constraint.ConstraintLayout")),
-                                0)))
-                .atPosition(0);
-        relativeLayout.check(matches(isDisplayed()));
+        try {
+            ViewInteraction relativeLayout = onData(anything())
+                    .inAdapterView(allOf(withId(R.id.list_todo),
+                            childAtPosition(
+                                    withClassName(is("android.support.constraint.ConstraintLayout")),
+                                    0)))
+                    .atPosition(1).check(doesNotExist());
+
+            relativeLayout.check(doesNotExist());
+        } catch (PerformException ignored) {
+        }
 
     }
 

@@ -38,6 +38,12 @@ public class DBTasks extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void dropDb() {
+        SQLiteDatabase dtb = this.getWritableDatabase();
+        dtb.execSQL("DROP TABLE IF EXISTS " + TaskContract.TaskEntry.TABLE);
+        onCreate(dtb);
+    }
+
 
     /*
     Add an element to the database
