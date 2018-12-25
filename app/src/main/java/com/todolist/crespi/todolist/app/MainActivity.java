@@ -39,8 +39,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = new DBTasks(this);
+        db.dropDb();
 
         addAllToView(null, null);
+    }
+
+    @Override
+    public void onDestroy () {
+        super.onDestroy();
+        db.dropDb();
     }
 
     @Override

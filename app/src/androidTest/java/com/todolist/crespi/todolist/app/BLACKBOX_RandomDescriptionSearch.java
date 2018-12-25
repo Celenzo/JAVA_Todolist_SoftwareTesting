@@ -1,4 +1,4 @@
-package com.todolist.crespi.todolist.app.BLACKBOX_UseCaseDriven;
+package com.todolist.crespi.todolist.app;
 
 
 import android.support.test.espresso.DataInteraction;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.todolist.crespi.todolist.R;
-import com.todolist.crespi.todolist.app.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -23,7 +22,8 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -32,48 +32,70 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class BLACKBOX_EmptyTaskAdd {
+public class BLACKBOX_RandomDescriptionSearch {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void bLACKBOX_EmptyTaskAdd() {
+    public void bLACKBOX_RandomDescriptionSearch() {
         ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.action_add_task), withContentDescription("Add Task"),
+                allOf(withId(R.id.sortBtn), withContentDescription("Show Options"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.action_bar),
                                         1),
-                                0),
+                                1),
                         isDisplayed()));
-
-        actionMenuItemView.check(matches(isDisplayed()));
         actionMenuItemView.perform(click());
 
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.button), withText("Add"),
+        ViewInteraction spinner = onView(
+                allOf(childAtPosition(
                         childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
+                                withId(android.R.id.custom),
                                 0),
+                        0),
                         isDisplayed()));
+        spinner.perform(click());
 
-        appCompatButton.check(matches(isDisplayed()));
-        appCompatButton.perform(click());
+        DataInteraction appCompatCheckedTextView = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0))
+                .atPosition(2);
+        appCompatCheckedTextView.perform(click());
 
-        DataInteraction relativeLayout = onData(anything())
-                .inAdapterView(allOf(withId(R.id.list_todo),
+        ViewInteraction editText = onView(
+                allOf(childAtPosition(
                         childAtPosition(
-                                withClassName(is("android.support.constraint.ConstraintLayout")),
-                                0)))
-                .atPosition(0);
-        relativeLayout.check(matches(not(isDisplayed())));
+                                withId(android.R.id.custom),
+                                0),
+                        1),
+                        isDisplayed()));
+        editText.perform(click());
+
+        ViewInteraction editText2 = onView(
+                allOf(childAtPosition(
+                        childAtPosition(
+                                withId(android.R.id.custom),
+                                0),
+                        1),
+                        isDisplayed()));
+        editText2.perform(replaceText("wo"), closeSoftKeyboard());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("Add"),
+                        childAtPosition(
+                                allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.LinearLayout")),
+                                                3)),
+                                3),
+                        isDisplayed()));
+        appCompatButton.perform(click());
 
     }
 
